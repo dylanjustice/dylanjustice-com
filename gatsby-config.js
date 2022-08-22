@@ -1,18 +1,20 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Starter Blog`,
+    title: `Dylan Justice personal blog`,
     author: {
-      name: `Kyle Mathews`,
-      summary: `who lives and works in San Francisco building useful things.`,
+      name: `Dylan Justice`,
+      summary: `SRE at LexisNexis`,
     },
-    description: `A starter blog demonstrating what Gatsby can do.`,
-    siteUrl: `https://gatsbystarterblogsource.gatsbyjs.io/`,
+    description: `Personal Blog`,
+    siteUrl: `https://dylanjustice.com`,
     social: {
-      twitter: `kylemathews`,
+      twitter: `dylancjustice`,
     },
   },
+  graphqlTypegen: true,
   plugins: [
     `gatsby-plugin-image`,
+    `gatsby-plugin-ts`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
