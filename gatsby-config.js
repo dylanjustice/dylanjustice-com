@@ -11,7 +11,9 @@ module.exports = {
       twitter: `dylancjustice`,
     },
   },
-  graphqlTypegen: true,
+  graphqlTypegen: {
+    typesOutputPath: `./gatsby-types.d.ts`
+  },
   plugins: [
     `gatsby-plugin-image`,
     `gatsby-plugin-ts`,
