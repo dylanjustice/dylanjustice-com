@@ -4,6 +4,9 @@ date: "2022-08-23"
 description: "Daily SCRUM takes practice, here's what I've learned."
 ---
 ## Background
+
+I was asked to put this together for a SCRUM master I worked with in July 2021, but never put it anywhere people could see it. I had been working with a team using the SCRUM framework for over a year, and we had worked out a lot of inefficiencies with daily. I joined another team new to the concept and had to fill in for the lead a few times. She was impressed, or at least amused with my approach to the event. So, she asked me to put together a brief guide for others to adopt, or adapt to their needs.
+
 ### What is Daily SCRUM?
 
 Daily Scrum is one of the five time-boxed events described in the Scrum Guide. This daily event is a time for the Development Team to create a plan for their next 24 hours of work in order to achieve the sprint goal.
