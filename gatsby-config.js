@@ -1,14 +1,15 @@
 module.exports = {
   siteMetadata: {
-    title: `Dylan Justice personal blog`,
+    title: `Dylan Justice`,
     author: {
       name: `Dylan Justice`,
-      summary: `SRE at LexisNexis`,
+      summary: `A personal record of professional lessons learned from developing software`,
     },
     description: `Personal Blog`,
     siteUrl: `https://dylanjustice.com`,
     social: {
       twitter: `dylancjustice`,
+      linkedIn: `https://www.linkedin.com/in/dylan-c-justice/`,
     },
   },
   graphqlTypegen: {

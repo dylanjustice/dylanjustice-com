@@ -30,6 +30,7 @@ const Seo: React.FC<SEOProps> = (props: SEOProps) => {
 						description
 						social {
 							twitter
+							linkedIn
 						}
 					}
 				}
