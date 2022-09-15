@@ -55,6 +55,14 @@ Huge PR's are a well-known nightmare for software engineers. The memory of a fri
 
 The key is releasability. Jack would need to shift his development approach from "building a feature", to "releasing the first deliverable increment." If Jack had been able to release within hours of starting his task, he could have asked for initial feedback from not only his fellow engineers, but from QA and Design before he gets too far down the road. With a short feedback loop, rework becomes smaller, or in some cases non-existent. It sort of dissolves into the development workflow.
 
+### Provocative Concepts: Continuous Code Review
+
+- Extension of Continuous integration
+- Pair programming as code review
+- Pre-commit code review
+- Post commit code review
+- Enterprise Code review
+
 ### Example No. 2: Release Branches
 
 Let's consider a product development team that is not using TBD. The team uses four branches, `development`, `working`, `staging`, and `production`. They work off of the `development` branch, and the other three are configured to deploy automatically to the respective integrated environments when changes were merged. On commit, Jenkins triggers an automated build to deploy code to the respective environment. Engineers will create feature branches and merge via a PR to `development`, where a CI process runs unit and integration tests. Once that passes, the engineer can merge `development` into `working` to trigger the deployment to the integrated test environment. The team is working in two week sprints, and deploys to `staging` after every sprint. The stakeholders run smoke tests and sign off on the production release shortly after. If an issue occurs in an elevated environment, a PR is created against the branch and subsequently merged down to `development`.
@@ -79,9 +87,15 @@ With just a few tweaks, this team is able to implement TBD. They now have a stea
 
 The last example presented a team that had continuous integration built into the process of committing to the trunk. CI is not a prerequisite for TBD. However, it's a very powerful tool for enforcing the policy of "Don't break the build." It's much harder for a teammate to take down the stability of the codebase by accidentally pushing changes to trunk without running the build and test scripts when it's a requirement for the build to pass prior to pushing the changes. Continuous Integration enables autonomy within the team that promotes confidence within the team. Trunk based development is a level up in software engineering and requires quality to be a first class citizen. Every contributor is responsible for maintaining the quality of the product, and CI should include a series of gates that ensure at least the minimum standards are met with every commit. In some cases, this may simply be the application compiles successfully and unit tests pass. As the team progresses, additional testing standards can be applied. There are plenty automated code-scanning tools to check for common patterns leading to bugs or security vulnerabilities that can be integrated into the build process.
 
-The most important factor in continuous integration is consistency. The scripts that are run on the continuous integration server should be identical to the scripts running on a contributor's machine. CI should be as fast as possible to encourage engineers to run CI early and often, to ensure they comply with the golden rule: "Don't break the build". Breaking the build on the trunk means other engineers pulling code end up in a broken state. We had a rule on my first software team who was definitely *not* running trunk based development, where if you broke the build you bought doughnuts for the team. "The doughnut rule". Everyone is in for a bad time if code is introduced to the mainline without being adequately verified. Although it's nice, it's not a requirement for your CI to run prior to committing code to the trunk. On teams who are committing straight to trunk, CI can be as simple as a team agreement to run tests before pushing, CI can run on the build server after the commit lands on the trunk. Or, maybe you have some forgetful or over-eager teammates. Consider using a git pre-push hook to "force" engineers to run tests prior to
+The most important factor in continuous integration is consistency. The scripts that are run on the continuous integration server should be identical to the scripts running on a contributor's machine. CI should be as fast as possible to encourage engineers to run CI early and often, to ensure they comply with the golden rule: "Don't break the build". Breaking the build on the trunk means other engineers pulling code end up in a broken state. We had a rule on my first software team who was definitely *not* running trunk based development, where if you broke the build you bought doughnuts for the team. "The doughnut rule". Everyone is in for a bad time if code is introduced to the mainline without being adequately verified. Although it's nice, it's not a requirement for your CI to run prior to committing code to the trunk. On teams who are committing straight to trunk, CI can be as simple as a team agreement to run tests before pushing, CI can run on the build server after the commit lands on the trunk. Or, maybe you have some forgetful or over-eager teammates. Consider using a git pre-push hook to "force" engineers to run tests prior to git performing the actual push to remote.
 
+I've found an effective way to reinforce the culture of keeping a clean build is through ChatOps. If your team is using MS Teams or Slack and you have a channel you regularly communicate in, having CI post the results of the latest run, the commit and the author gives visibility to the build. It's a really fast way for news to travel should something go wrong. I don't endorse chat-shaming your teammates over a build failure. But it does build culture around quality, and helps hold everyone accountable. And kudos to those teams who can keep the channel in the green all the time!
 
+Your CI is only as valuable as your test suite. A simple CI build will catch whether or not the app failed to compile because of a rogue semicolon, but the tests should bring the real value. Has the code being introduced changed existing functionality? Does the suite still have a sufficient level of coverage given the new code paths that were added? There is often a negative stigma around testing. Many teams add tests after the feature is complete, which makes testing the thing that stands in the way of getting the feature into production, or at least to the next phase of verification. Putting it in a different light, automated testing is the gateway to adding speed without sacrificing stability. *Accelerate* indicates that a reliable test suite makes teams both confident their software is releasable as well as confident that a test failure indicates a real defect (5).
+
+In terms of Trunk Based Development, releasability is one of the golden rules. High performing teams take pride in testing the code they write in order to sustain confidence in the codebase as a whole. And pragmatism should always be the driving inspiration between how much testing is *really* required to maintain quality code. When you're up against deadlines, it's easy to take shortcuts and make concessions when it comes to testing. I have a really good relationship with test driven development, and it can absolutely help with these issues. But when you need to slam a bugfix in for the good of the product, there is usually time to take a breath and backfill some of that coverage. At the end of the day, coverage metrics are intended to be guidelines to enforce a best practice. But as a team, you control those standards. When you take the time to improve your relationship with writing tests as a part of your development process you'll see your productivity, confidence and overall satisfaction rise.
+
+## Maintaining Releasability
 ### Feature Flags and Branching by Abstraction
 
 - Maintaining releasability while simultaneously delivering large features
@@ -92,13 +106,7 @@ The most important factor in continuous integration is consistency. The scripts 
 - Simple example
 - Dependency Injection
 
-### Example No. 3: Continuous Code Review
 
-- Extension of Continuous integration
-- Pair programming as code review
-- Pre-commit code review
-- Post commit code review
-- Enterprise Code review
 
 
 ### Continuous Delivery
@@ -111,6 +119,7 @@ The most important factor in continuous integration is consistency. The scripts 
 - 2 Forsgren, N., Humble, J., & Kim, G. (2018). Trunk-Based Development. In Accelerate: The science behind devops: Building and scaling high performing technology organizations (pp. 55–56). essay, IT Revolution.
 - [3][3]: "You're doing it wrong" https://trunkbaseddevelopment.com/youre-doing-it-wrong/#keeping-a-single-release-branch Accessed 09/13/2022
 - [4][4]: Hammant, Paul "Branch for release" https://trunkbaseddevelopment.com/branch-for-release/ Accessed 09/13/2022
+- 5 Forsgren, N., Humble, J., & Kim, G. (2018). Test Automation. In Accelerate: The science behind devops: Building and scaling high performing technology organizations (pp. 53-54). essay, IT Revolution.
 
 [1]: https://trunkbaseddevelopment.com/#one-line-summary "One-line summary"
 [3]: https://trunkbaseddevelopment.com/youre-doing-it-wrong/#keeping-a-single-release-branch "Keeping a single release branch"
