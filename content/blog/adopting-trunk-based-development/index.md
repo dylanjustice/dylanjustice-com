@@ -12,32 +12,29 @@ Throughout the organization, nearly every development strategy is in practice. F
 
 ### About Me
 
-I'm Dylan Justice, and I'm an Site Reliability Engineer. SRE for short. You may be most familiar with the SRE team during or after a production incident. We focus on our system's production infrastructure, solving operations problems using software engineering. This means building tools and automations to reduce our MTTR, or mean time to respond, to production issues. It also means ensuring our applications have appropriate levels of monitoring and alerting. We treat production issues as opportunities to learn, and use those opportunities to reflect with application teams on how we can improve to reduce the likelihood of history repeating itself.
+I'm Dylan Justice, and I'm an Site Reliability Engineer. SRE for short. You may be most familiar with the SRE team during or after a production incident. We focus on our system's production infrastructure, solving operations problems using software engineering. This means building tools and automation's to reduce our MTTR, or mean time to respond, to production issues. It also means ensuring our applications have appropriate levels of monitoring and alerting. We treat production issues as opportunities to learn, and use those opportunities to reflect with application teams on how we can improve to reduce the likelihood of history repeating itself.
 
 Prior to being an SRE, I was a software engineer on product development teams for 9 years. I've worked with many languages in that time, both frontend and backend. But my background is primarily dotnet, with a more recent love developing in React. I have a couple of stories I'll integrate into the discussion that will help paint the picture of how trunk based development transformed how I think about developing software forever.
 
-
-
-
 ### Git Flow / Traditional Software Development
 
-A common approach to change management in software is for developers to branch off of either a mainline or development branch of the repository. They create feature branches in order to preserve the integrity of the main branch while they write changes intended to be merged back into the main branch downstream. When changes are complete, a pull request is opened and the code goes through a technical review by at least one peer, or in some cases a governing body of reviewers. Reviewers can request the author to make changes to the feature branch to meet standards and correct potential issues before they will approve of the merge. A discussion is usually formed within the PR and the author will push new changes to the feature branch to satisfy the reviewers. When the branch meets the standars of the reviewers, and the required number of approvals have been reached, the PR is merged into the mainline branch and the work can be sent to the next stage of it's lifecycle. This is usually a working or staging environment that allows functional testing, visual design review, and possibly performance testing to be performed on the new feature. Once the feature has passed the standards to be put into the production environment, a release is scheduled and eventually deployed to production.
+A common approach to change management in software is for developers to branch off of either a mainline or development branch of the repository. They create feature branches in order to preserve the integrity of the main branch while they write changes intended to be merged back into the main branch downstream. When changes are complete, a pull request is opened and the code goes through a technical review by at least one peer, or in some cases a governing body of reviewers. Reviewers can request the author to make changes to the feature branch to meet standards and correct potential issues before they will approve of the merge. A discussion is usually formed within the PR and the author will push new changes to the feature branch to satisfy the reviewers. When the branch meets the standards of the reviewers, and the required number of approvals have been reached, the PR is merged into the mainline branch and the work can be sent to the next stage of it's lifecycle. This is usually a working or staging environment that allows functional testing, visual design review, and possibly performance testing to be performed on the new feature. Once the feature has passed the standards to be put into the production environment, a release is scheduled and eventually deployed to production.
 
-This model is widely adopted and is considered a succesful approach to working in version control with teams. It suits contributors of open source software on Github. Contributors are usually not working on the project full time, and may need a long running branch to complete a task or issue over the course of weeks or months. Git flow allows plenty of visibility and control over the main branch, preventing unwanted changes from being released to the production environment. In this model, releases are often thoroughly tested and vetted in lower environments prior to going to production. The cadence of releasing software tends to be on a monthly or quarterly basis. Although, it's not uncommon to have high performing teams working in this model doing weekly releases.
+This model is widely adopted and is considered a successful approach to working in version control with teams. It suits contributors of open source software on Github. Contributors are usually not working on the project full time, and may need a long running branch to complete a task or issue over the course of weeks or months. Git flow allows plenty of visibility and control over the main branch, preventing unwanted changes from being released to the production environment. In this model, releases are often thoroughly tested and vetted in lower environments prior to going to production. The cadence of releasing software tends to be on a monthly or quarterly basis. Although, it's not uncommon to have high performing teams working in this model doing weekly releases.
 
-### Trunk Based Development: The Five Minute Overview
+### Trunk Based Development: Introduction
 
-Trunk based development is a "source-control branching model, where developers collaborate on code in a single branch called `trunk`, resist any pressure to create other long-lived development branches by employing documented techniques. They therefore avoid merge hell, do not break the build, and live happily ever after" [1][1].
+> Trunk based development is a "source-control branching model, where developers collaborate on code in a single branch called `trunk`, resist any pressure to create other long-lived development branches by employing documented techniques. They therefore avoid merge hell, do not break the build, and live happily ever after" [(1)][1].
 
-Now that we've discussed Git-Flow, how is TBD different? Git flow is highly dependent on branches, which can cause problems. Teams working in branches can become disconnected from eachother. Lack of communication can cause unexpected merge conflicts, regressions due to a bad merge, and worst of all: duplicated code. Trunk based teams are committing early and often to the main branch, which allows contributors to share work as they build.
-In many cases, trunk is linked directly to the production application. This means the build cannot be broken, and the team's priority is to maintain releasability. This often requires a mindset change. It's difficult at first to grasp the concept of having work-in-progress committed to `trunk` and ready to be released at any time. In most cases, using feature flags to corral changes to existing code is an excellent way to manage this paradigm. By consistently maintaining a releasable main branch, you eliminate the need for a "code-freeze" to stablize the environment in preparation for a release. In *Accelerate*, the 2017 state of devops report claimed "developing off trunk/master rather than on long-lived feature branches was correlated with higher delivery performance" [2](#References). Performance in this context is measured in terms of release frequency, or lead-time. Since the core concept of TBD is maintaining releasability, product teams are able to release to production on a more frequent basis. In advanced cases, multiple times per day.
+Now that we've discussed Git-Flow, how is TBD different? Git flow is highly dependent on branches, which can cause problems. Teams working in branches can become disconnected. Lack of communication can cause unexpected merge conflicts, regressions due to a bad merge, and worst of all: duplicated code. Trunk based teams are committing early and often to the main branch, which allows contributors to share work as they build.
+In many cases, trunk is linked directly to the production application. This means the build cannot be broken, and the team's priority is to maintain releasability. This often requires a mindset change. It's difficult at first to grasp the concept of having work-in-progress committed to `trunk` and ready to be released at any time. In most cases, using feature flags to corral changes to existing code is an excellent way to manage this paradigm. By consistently maintaining a releasable main branch, you eliminate the need for a "code-freeze" to stabilize the environment in preparation for a release. In _Accelerate_, the 2017 state of devops report claimed "developing off trunk/master rather than on long-lived feature branches was correlated with higher delivery performance" [(2)](#References). Performance in this context is measured in terms of release frequency, or lead-time. Since the core concept of TBD is maintaining releasability, product teams are able to release to production on a more frequent basis. In advanced cases, multiple times per day.
 
-
+In less words, changing your branching model can completely the way you and your team work for the better.
 
 ### Example No. 1: The Vicious Cycle
 
 Consider this scenario:
-Jack is an engineer developing a large feature for the application. At the beginning of the two week sprint, he branches off the main branch and begins work. After a week, he opens a PR with his changes. It's a large diff and will take his teammates a significant chunk of time to review it. The team requires two peer approvals before the feature branch can be merged into the development branch, and everyone is working on features. After sitting unreviewed for about a day, his teammates set aside enough time to review the PR. One teammate approves, another leaves requested changes and will approve after Jack has completed the tasks. Another day passes and Jack completes all of the requested changes; his teammate approves. The PR is merged into the main branch and deploys the application to a staging environment. The QA team and Design team are notified the feature is ready for testing. Jack takes a new story, and begins a new branch. That day, the QA Team comes back to him with issues that came up during testing. In addition, the design team has tweaks to the interface that need to be made.
+Jack is an engineer developing a large feature for the application. At the beginning of the two week sprint, he branches off the main branch and begins work. After a week, he opens a PR with his changes. It's a large diff and will take his teammates a significant chunk of time to review it. The team requires two peer approvals before the feature branch can be merged into the development branch, and everyone is working on features. After sitting un-reviewed for about a day, his teammates set aside enough time to review the PR. One teammate approves, another leaves requested changes and will approve after Jack has completed the tasks. Another day passes and Jack completes all of the requested changes; his teammate approves. The PR is merged into the main branch and deploys the application to a staging environment. The QA team and Design team are notified the feature is ready for testing. Jack takes a new story, and begins a new branch. That day, the QA Team comes back to him with issues that came up during testing. In addition, the design team has tweaks to the interface that need to be made.
 There are now two days left in the sprint, and Jack opens another branch to fix the bugs. He opens another PR and requests a review from his teammates, which is quickly reviewed and merged. Jack notifies the team that the feature is ready to be re-tested and starts work on the other user story. Miraculously, the story passes both QA and design and is sent to the product owner for final verification before the end of the sprint.
 
 This story may sound familiar as Jack is far from exceptional.
@@ -45,6 +42,7 @@ This story may sound familiar as Jack is far from exceptional.
 ![Obi-Wan](obiwan.gif)
 
 What are some of the issues that affected Jack's performance during the sprint?
+
 > Note: Could be fun to do a 1-2-4-All for this.
 
 1. He didn't ask for any input during the development phase, and resulted in a long code review process.
@@ -53,19 +51,67 @@ What are some of the issues that affected Jack's performance during the sprint?
 
 This scenario highlights a few issues that can be alleviated through implementation of TBD as well as general agile concepts.
 
-Huge PR's are a well-known nightmare for software engineers. The memory of a friendly note from a colleague asking for a "quick PR" on a 150 file diff on Friday afternoon is enough to send shivers down my spine. It also forces the reviewers to choose between a quality review, and meeting their own deadlines. Delivering code in smaller, digestable chunks leads to faster feedback loops with peers, faster deployments and ultimately reduced lead time. At scale, trunk based development is aligned with the theory of having short lived feature branches (think hours, not days) that are branched off of trunk, and merged back in assuming Continuous Integration passes. This requires a shift in the planning phase of the work, to ensure work is broken down into the smallest vertical slices possible, and engineers can deliver increments in less than a day.
+Huge PR's are a well-known nightmare for software engineers. The memory of a friendly note from a colleague asking for a "quick PR" on a 150 file diff on Friday afternoon is enough to send shivers down my spine. It also forces the reviewers to choose between a quality review, and meeting their own deadlines. Delivering code in smaller, digestible chunks leads to faster feedback loops with peers, faster deployments and ultimately reduced lead time. At scale, trunk based development is aligned with the theory of having short lived feature branches (think hours, not days) that are branched off of trunk, and merged back in assuming Continuous Integration passes. This requires a shift in the planning phase of the work, to ensure work is broken down into the smallest vertical slices possible, and engineers can deliver increments in less than a day.
+
+The key is releasability. Jack would need to shift his development approach from "building a feature", to "releasing the first deliverable increment." If Jack had been able to release within hours of starting his task, he could have asked for initial feedback from not only his fellow engineers, but from QA and Design before he gets too far down the road. With a short feedback loop, rework becomes smaller, or in some cases non-existent. It sort of dissolves into the development workflow.
+
+### Example No. 2: Release Branches
+
+Let's consider a product development team that is not using TBD. The team uses four branches, `development`, `working`, `staging`, and `production`. They work off of the `development` branch, and the other three are configured to deploy automatically to the respective integrated environments when changes were merged. On commit, Jenkins triggers an automated build to deploy code to the respective environment. Engineers will create feature branches and merge via a PR to `development`, where a CI process runs unit and integration tests. Once that passes, the engineer can merge `development` into `working` to trigger the deployment to the integrated test environment. The team is working in two week sprints, and deploys to `staging` after every sprint. The stakeholders run smoke tests and sign off on the production release shortly after. If an issue occurs in an elevated environment, a PR is created against the branch and subsequently merged down to `development`.
+
+This is a relatively strict workflow for the team. They have a structured process of promotion and the engineers don't have full control over the release process. Like Jack's team, this creates long lead times between development and production. So, how does trunk based development help with this team? And what does the implementation look like from a CI and release process?
+This team deviates from TBD in several ways:
+
+1. There are too many branches to maintain. Engineers have to consciously maintain the state of their work in each environment.
+2. Allowing changes to the release branches can cause merge conflicts and pain. It can also introduce regressions to the other environments.
+3. The `working`, `staging` and `production` branches are kept alive for a series of releases. In a branch-for-release strategy, "the principal mechanism to land code on that branch is the branch creation itself" [(3)][3].
+
+Since the team has three integrated environments, we'll consider `working` to be our new trunk, since it continuously deploys to the `working` environment. `development`, `staging` and `production` will be deleted. The team now works off of `main`, formerly `working`. The release process to `staging` and `production` are now broken, and the CI job has been abandoned. To re-institute the "Don't break the build", we'll add a pull-request trigger to the main branch. The CI build will run whenever a pull request is opened for `main`, and a branch policy will require the build to pass before merging. Now commits are flowing to the `main` branch, and we need to handle a release. Staging and Production will both release the same way, but instead of deploying code from a branch, they will deploy from a git tag. When the team is ready to release, they can tag the commit in `main` and trigger the deployment with the specified tag, say `1.21.0`. When the release is verified and ready to be deployed to production, the same tag can be deployed to prod.
+
+In this model, we have controlled releases to production. The working environment is our proving ground, and is constantly updated. If an issue is found in the production environment on version `1.21.0`, a release branch can be created from that tag, a fix applied and then re-tagged as a patch. We'll call it `1.21.1`. However, to prevent the chance of forgetting to merge that fix down from the release branch to the trunk, fixes should be made on `main`, tested in working, and then cherry picked to the release branch. Staging can be deployed from the new tag, and the issue verified in the higher environment before being pushed to production. This reduces the chance of creating a regression in a release downstream, thus avoiding an awkward conversation with the customer explaining why the same bug appeared twice in production.
+
+![Branch for Release](./branch_for_release.png)
+_Credit: Paul Hammant, www.trunkbaseddevelopment.com_ [(4)][4]
+
+With just a few tweaks, this team is able to implement TBD. They now have a steady stream of commits to a single branch, continuous integration to enforce the integrity of the codebase, and a reliable release process that allows for patches between planned releases.
+
+### The Importance of Continuous Integration
+
+The last example presented a team that had continuous integration built into the process of committing to the trunk. CI is not a prerequisite for TBD. However, it's a very powerful tool for enforcing the policy of "Don't break the build." It's much harder for a teammate to take down the stability of the codebase by accidentally pushing changes to trunk without running the build and test scripts when it's a requirement for the build to pass prior to pushing the changes. Continuous Integration enables autonomy within the team that promotes confidence within the team. Trunk based development is a level up in software engineering and requires quality to be a first class citizen. Every contributor is responsible for maintaining the quality of the product, and CI should include a series of gates that ensure at least the minimum standards are met with every commit. In some cases, this may simply be the application compiles successfully and unit tests pass. As the team progresses, additional testing standards can be applied. There are plenty automated code-scanning tools to check for common patterns leading to bugs or security vulnerabilities that can be integrated into the build process.
+
+The most important factor in continuous integration is consistency. The scripts that are run on the continuous integration server should be identical to the scripts running on a contributor's machine. CI should be as fast as possible to encourage engineers to run CI early and often, to ensure they comply with the golden rule: "Don't break the build". Breaking the build on the trunk means other engineers pulling code end up in a broken state. We had a rule on my first software team who was definitely *not* running trunk based development, where if you broke the build you bought doughnuts for the team. "The doughnut rule". Everyone is in for a bad time if code is introduced to the mainline without being adequately verified. Although it's nice, it's not a requirement for your CI to run prior to committing code to the trunk. On teams who are committing straight to trunk, CI can be as simple as a team agreement to run tests before pushing, CI can run on the build server after the commit lands on the trunk. Or, maybe you have some forgetful or over-eager teammates. Consider using a git pre-push hook to "force" engineers to run tests prior to
 
 
+### Feature Flags and Branching by Abstraction
 
-### Example #2: Release Branches
+- Maintaining releasability while simultaneously delivering large features
+- What are feature flags, and how do they work?
+- Simple example
+- Popular frameworks and libraries
+- What is branching by abstraction?
+- Simple example
+- Dependency Injection
 
-At full capacity a product team was eight software engineers, a UI/UX designer, a product owner, and a scrum master. They work in 2 week sprints and release to production on the same interval. The team was already set up with four branches, `development`, `working`, `staging`, and `production`. They worked off of the `development` branch, and the other three were configured to deploy automatically to the respective integrated environments when changes were merged.
+### Example No. 3: Continuous Code Review
 
+- Extension of Continuous integration
+- Pair programming as code review
+- Pre-commit code review
+- Post commit code review
+- Enterprise Code review
+
+
+### Continuous Delivery
+
+-
 
 ## References
-* [1][1]: "Introduction" www.trunkbaseddevelopment.com Accessed 09/12/2022
-* 2 Forsgren, N., Humble, J., & Kim, G. (2018). Trunk-Based Development. In Accelerate: The science behind devops: Building and scaling high performing technology organizations (pp. 55–56). essay, IT Revolution.
 
+- [1][1]: "Introduction" www.trunkbaseddevelopment.com Accessed 09/12/2022
+- 2 Forsgren, N., Humble, J., & Kim, G. (2018). Trunk-Based Development. In Accelerate: The science behind devops: Building and scaling high performing technology organizations (pp. 55–56). essay, IT Revolution.
+- [3][3]: "You're doing it wrong" https://trunkbaseddevelopment.com/youre-doing-it-wrong/#keeping-a-single-release-branch Accessed 09/13/2022
+- [4][4]: Hammant, Paul "Branch for release" https://trunkbaseddevelopment.com/branch-for-release/ Accessed 09/13/2022
 
 [1]: https://trunkbaseddevelopment.com/#one-line-summary "One-line summary"
-
+[3]: https://trunkbaseddevelopment.com/youre-doing-it-wrong/#keeping-a-single-release-branch "Keeping a single release branch"
+[4]: https://trunkbaseddevelopment.com/branch-for-release/ "Branch for release"

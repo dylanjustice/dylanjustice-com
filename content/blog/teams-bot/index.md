@@ -6,7 +6,7 @@ description: "That time I built a bot, and then had to delete it."
 
 ## The problem
 
-I was recently tasked with creating an automation that would help our Operations team suspend a user who was determined to be abusing our system. Meaning, our infrastructure is taking a hit because of an automated script, a bot, or an otherwised authorized user who was putting unusual load on a critical asset. In order to maintain response times, and preserve the reliability of the system, this user needs to be suspended as soon as possible.
+I was recently tasked with creating an automation that would help our Operations team suspend a user who was determined to be abusing our system. Meaning, our infrastructure is taking a hit because of an automated script, a bot, or an otherwise authorized user who was putting unusual load on a critical asset. In order to maintain response times, and preserve the reliability of the system, this user needs to be suspended as soon as possible.
 In talking with Ops, we identified the process for suspending a user was between 8 and 10 steps and decisions, utilizing 3 or more tools including logging into a production database. To reduce the response time for an incident, we decided this process could be triggered manually and the steps executed programmatically.
 
 ## The idea
@@ -98,7 +98,7 @@ If you need the bot to do something other than ask questions and take responses,
 
 In this case, I needed to make a simple API call and parse the response to return to the user. This is a simple workflow, but not an easy task to complete through the UI. The HTTP request action meets the requirement for running an API call, but doesn't do you any favors. There are ways of creating your own custom connectors to avoid the pain and create a more immersive experience for the non-coder, but I had little luck with them. Especially considering my API required OAuth authentication. Learn more about custom connectors [here](https://docs.microsoft.com/en-us/connectors/custom-connectors/).
 
-Once the HTTP Request and the JSON Response are parsed, the flow ends with an action to "Return values to Power Virtual Agents." If the flow is successful, the bot will receive the values and store them as variables to inform future decisions in the dialog. One caveaut, Flows do not handle optional inputs from power virtual agents even though the UI would claim otherwise. I had to create several identical flows that took different inputs to handle the possibility of null values, and then build that into the decision logic of my PVA. For the sake of future no-coders, I hope that issue will be resolved soon.
+Once the HTTP Request and the JSON Response are parsed, the flow ends with an action to "Return values to Power Virtual Agents." If the flow is successful, the bot will receive the values and store them as variables to inform future decisions in the dialog. One caveat, Flows do not handle optional inputs from power virtual agents even though the UI would claim otherwise. I had to create several identical flows that took different inputs to handle the possibility of null values, and then build that into the decision logic of my PVA. For the sake of future no-coders, I hope that issue will be resolved soon.
 
 Now that my bot can call the API and respond accordingly based on the result, I'm ready to tackle the authentication.
 
@@ -125,7 +125,7 @@ The better way to do this would be to have an App Registration for the bot, and 
 
 ### Testing
 
-With the bot and the api secured, the only thing left is to publish and test the bot from MS Teams. In the left side menu there is a "Publish" option, which takes you to the Publish page. Clicking the "Publish" button will start the process of making the bot available in MS Teams and through the demo webiste. After a few minutes, the bot becomes available and has an option to open in Teams.
+With the bot and the api secured, the only thing left is to publish and test the bot from MS Teams. In the left side menu there is a "Publish" option, which takes you to the Publish page. Clicking the "Publish" button will start the process of making the bot available in MS Teams and through the demo website. After a few minutes, the bot becomes available and has an option to open in Teams.
 I had to make quite a few *adjustments* to make everything work correctly. There is a web client in the PVA editor that allows live testing your changes, but to test it out in MS Teams, it needs to be re-published each time. To name a few:
 * Lining up the JSON response in the flow and the api
 * Reworking the topic logical flow for dialog

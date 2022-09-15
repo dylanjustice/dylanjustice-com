@@ -41,7 +41,7 @@ const Seo: React.FC<SEOProps> = (props: SEOProps) => {
 	const defaultTitle = site.siteMetadata?.title;
 
 	return (
-		<>
+		<React.Fragment>
 			<title>{defaultTitle ? `${title} | ${defaultTitle}` : title}</title>
 			<meta name="description" content={metaDescription} />
 			<meta property="og:title" content={title} />
@@ -55,7 +55,7 @@ const Seo: React.FC<SEOProps> = (props: SEOProps) => {
 			<meta name="twitter:title" content={title} />
 			<meta name="twitter:description" content={metaDescription} />
 			{children}
-		</>
+		</React.Fragment>
 	);
 };
 
