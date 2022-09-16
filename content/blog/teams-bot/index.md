@@ -86,9 +86,9 @@ You get the picture. Concise, easy to read, and extensible.
 
 ### Building the Bot
 
-The next step was creating a trigger mechanism, which had been identified as a Teams conversational bot. Create a bot via the Power Virtual agents web app and choose a name. I picked "Operations Assistant." Your first bot may take a while to create, but you'll land on the homepage where you can start creating your own _Topics_ and _Entities_. Topics are dialog trees triggered by a phrase or set of phrases. Entities are predefined data sets or data types (i.e U.S States).
+The next step was creating a trigger mechanism, which had been identified as a Teams conversational bot. Create a bot via the Power Virtual agents web app and choose a name. I picked "Operations Assistant." Your first bot may take a while to create, but you'll land on the homepage where you can start creating your _Topics_ and _Entities_. Topics are dialog trees triggered by a phrase or set of phrases. Entities are predefined data sets or data types (i.e U.S States).
 
-Creating a topic starts by picking trigger phrases that the user would type into Teams and the bot would pick up and reply with the first step of the dialog. I needed to collect two or three fields from the user in order to run my API call. This equated to a series of questions and answers that would determine the path of the dialog.
+Creating a topic starts by picking trigger phrases that the user would type into Teams and the bot would pick up and reply with the first step of the dialog. I needed to collect two or three fields from the user to run my API call. This equated to a series of questions and answers that would determine the path of the dialog.
 
 ![Conversation](./chatbot_flow.png)
 
@@ -96,7 +96,7 @@ If you need the bot to do something other than asking questions and taking respo
 
 ![Flow Input](./flow-input.png)
 
-In this case, I needed to make a simple API call and parse the response to return it to the user. This is a simple workflow, but not an easy task to complete through the UI. The HTTP request action meets the requirement for running an API call but doesn't do you any favors. There are ways of creating your own custom connectors to avoid the pain and create a more immersive experience for the non-coder, but I had little luck with them. Especially considering my API required OAuth authentication. Learn more about custom connectors [here](https://docs.microsoft.com/en-us/connectors/custom-connectors/).
+In this case, I needed to make a simple API call and parse the response to return it to the user. This is a simple workflow, but not an easy task to complete through the UI. The HTTP request action meets the requirement for running an API call but doesn't do you any favors. There are ways of creating your custom connectors to avoid the pain and create a more immersive experience for the non-coder, but I had little luck with them. Especially considering my API required OAuth authentication. Learn more about custom connectors [here](https://docs.microsoft.com/en-us/connectors/custom-connectors/).
 
 Once the HTTP Request and the JSON Response are parsed, the flow ends with an action to "Return values to Power Virtual Agents." If the flow is successful, the bot will receive the values and store them as variables to inform future decisions in the dialog. One caveat, Flows do not handle optional inputs from power virtual agents even though the UI would claim otherwise. I had to create several identical flows that took different inputs to handle the possibility of null values, and then build that into the decision logic of my PVA. For the sake of future no-coders, I hope that issue will be resolved soon.
 
@@ -141,4 +141,4 @@ Turns out, PVA is a premium product in the suite of Microsoft Power Platform. Wh
 
 ## Conclusion
 
-Power Virtual Agents and Power Automate are useful tools, that cost money. From an agility perspective, the speed to market of spinning up a Teams bot through PVA is enticing. Especially with the security features, it comes out of the box. However, as a technical person, these tools are extremely frustrating to use. I found myself wanting to spin up my own bot at least 100 times so I could control the behavior and run things my way. I may have come to the same result, but I'm glad I saw it through.
+Power Virtual Agents and Power Automate are useful tools, that cost money. From an agility perspective, the speed to market of spinning up a Teams bot through PVA is enticing. Especially with the security features, it comes out of the box. However, as a technical person, these tools are extremely frustrating to use. I found myself wanting to spin up my bot at least 100 times so I could control the behavior and run things my way. I may have come to the same result, but I'm glad I saw it through.
