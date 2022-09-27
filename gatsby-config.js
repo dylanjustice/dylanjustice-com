@@ -40,6 +40,17 @@ module.exports = {
 				defaultDataLayer: { platform: "gatsby" }
 			},
 		},
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: "325161812",
+        head: false,
+        anonymize: true,
+        siteSpeedSampleRate: 10,
+        cookieDomain: "dylanjustice.com",
+        enableWebVitalsTracking: true,
+      },
+    },
 		{
 			resolve: `gatsby-transformer-remark`,
 			options: {
