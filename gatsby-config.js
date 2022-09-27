@@ -3,7 +3,7 @@ module.exports = {
     title: `Dylan Justice`,
     author: {
       name: `Dylan Justice`,
-      summary: `A personal record of professional lessons learned from developing software`,
+      summary: `A personal record of professional lessons learned from developing software. I'll make this fancy later.`,
     },
     description: `Personal Blog`,
     siteUrl: `https://dylanjustice.com`,
