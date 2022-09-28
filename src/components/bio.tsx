@@ -20,6 +20,7 @@ const Bio: React.FC = () => {
 					}
 					social {
 						twitter
+						linkedIn
 					}
 				}
 			}
@@ -44,11 +45,12 @@ const Bio: React.FC = () => {
 			/>
 			{author?.name && (
 				<p>
-					Written by <strong>{author.name}</strong> {author?.summary || null}
-					{` `}
-					<a href={`https://twitter.com/${social?.twitter || ``}`}>
-						You should follow them on Twitter
+					Written by {` `}
+					<a href={social?.linkedIn}>
+						<strong>{author.name}</strong>
 					</a>
+					<br />
+					{author.summary || ""}
 				</p>
 			)}
 		</div>
