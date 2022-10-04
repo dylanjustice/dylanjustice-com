@@ -100,6 +100,12 @@ In terms of Trunk Based Development, releasability is one of the golden rules. H
 - Managing risk appropriately
 - Can't necessarily trust everyone
 - Agility building the right product, Devops building the product right
+
+Working on a team new to high-performance delivery can introduce a regression in mindset due to fear of making a change that inevitably causes an issue. My particular experience with this issue was an ambition to be working at a faster cadence than we were. We were continuously pushing to a staging environment, and we were simply tagging the commit we wanted to release to prod and moving on. When our first serious issue came up in production while we were halfway through a sprint, we weren't comfortable enough with the state of the application to release to prod. We broke the rule. We weren't releasable. We spent the next two days ensuring the system was up to our standards, or the stakeholder's standards, to fix the issue in production. Two days was not acceptable. We needed a better strategy, and we need to take the state of releasability more seriously.
+Our team was releasing to production about every two weeks after we demo the latest work at our sprint review meeting. In trunk-based development, this isn't fast enough to be released from the trunk. There is too much drift between the environments at that point. I spoke earlier about the branch-from-release technique. This was a hard lesson, but a good one. By creating a release branch, we were able to cherry-pick a fix to the production code and deploy it to staging for testing without introducing any risk from the latest development.
+
+One of the biggest concerns my team had when introducing trunk-based development was code review. At this point, we took pull requests very seriously. Every line was meticulously reviewed before it was introduced to the main branch. Sometimes it would take days to get a PR merged. It's not uncommon to have one or more teammates that don't quite trust *someone's* code. Removing the barrier to merging into `trunk` may as well have been opening the gates of hell! Complete chaos was sure to follow. It was a hard sell, but we implemented some safeguards to ease the concerns. First was the CI process. We required a pre-push hook to run all the unit and integration tests successfully before the commit was pushed to trunk. We also really wanted to keep code review as a part of our "definition of done". Code review is often referred to in the negative because it's raw constructive criticism. Someone who may have no idea what your code does can offer insights into ways it can be improved. Or, even suggest changes that could prevent issues immediately, or down the road. However, when you spend a week building something you think is awesome and your colleague rips it to shreds, it's expected to be upset that you are not in fact "done" yet. In a traditional pull-request environment, it may mean one or more rounds of changes before you can even get something tested. That slows down progress and can hurt the team's overall performance. Consider if you could have the best of both worlds. There is a concept of "Continuous code review" that allows teams to review each other's code without the existence of a pull request.
+
 ### Feature Flags and Branching by Abstraction
 
 - Maintaining releasability while simultaneously delivering large features
@@ -109,7 +115,6 @@ In terms of Trunk Based Development, releasability is one of the golden rules. H
 - What is branching by abstraction?
 - Simple example
 - Dependency Injection
-
 
 
 
