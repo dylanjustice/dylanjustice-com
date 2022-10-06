@@ -41,7 +41,7 @@ This story may sound familiar as Jack is far from exceptional.
 
 What are some of the issues that affected Jack's performance during the sprint?
 
-> Note: Could be fun to do a 1-2-4-All for this.
+<!-- Note: Could be fun to do a 1-2-4-All for this. -->
 
 1. He didn't ask for any input during the development phase and resulted in a long code review process.
 2. He wasn't able to get feedback from QA or Design until after all of the work he thought the feature required was completed.
@@ -94,7 +94,7 @@ Your CI is only as valuable as your test suite. A simple CI build will catch whe
 
 In terms of Trunk Based Development, releasability is one of the golden rules. High-performing teams take pride in testing the code they write to sustain confidence in the codebase as a whole. And pragmatism should always be the driving inspiration between how much testing is required to maintain quality code. When you're up against deadlines, it's easy to take shortcuts and make concessions when it comes to testing. I have a really good relationship with test-driven development, and it can help with these issues. But when you need to slam a bugfix in for the good of the product, there is usually time to take a breath and backfill some of that coverage. At the end of the day, coverage metrics are intended to be guidelines to enforce a best practice. But as a team, you control those standards. When you take the time to improve your relationship with writing tests as a part of your development process you'll see your productivity, confidence, and overall satisfaction rise.
 
-## Maintaining Releasability: Personal Experience
+## Concerns with adoption
 
 - Change management boards, fear of change
 - Managing risk appropriately
@@ -106,10 +106,22 @@ Our team was releasing to production about every two weeks after we demo the lat
 
 One of the biggest concerns my team had when introducing trunk-based development was code review. At this point, we took pull requests very seriously. Every line was meticulously reviewed before it was introduced to the main branch. Sometimes it would take days to get a PR merged. It's not uncommon to have one or more teammates that don't quite trust *someone's* code. Removing the barrier to merging into `trunk` may as well have been opening the gates of hell! Complete chaos was sure to follow. It was a hard sell, but we implemented some safeguards to ease the concerns. First was the CI process. We required a pre-push hook to run all the unit and integration tests successfully before the commit was pushed to trunk. We also really wanted to keep code review as a part of our "definition of done". Code review is often referred to in the negative because it's raw constructive criticism. Someone who may have no idea what your code does can offer insights into ways it can be improved. Or, even suggest changes that could prevent issues immediately, or down the road. However, when you spend a week building something you think is awesome and your colleague rips it to shreds, it's expected to be upset that you are not in fact "done" yet. In a traditional pull-request environment, it may mean one or more rounds of changes before you can even get something tested. That slows down progress and can hurt the team's overall performance. Consider if you could have the best of both worlds. There is a concept of "Continuous code review" that allows teams to review each other's code without ever creating a pull request.
 
-Pair programming is the first form of "Continuous Code Review." If the code review guidelines state that you must have another set of eyes look at your code, then it's most reasonable to assume that working in tandem should keep everyone honest in following the team's standards. Pairing is easier for some engineers than others. I enjoy spending some of my time in a pair working towards a common goal, while other times I prefer to work on my own. For instance, when working on a difficult problem that more than one person is aware of may be easier to maximize brainpower by teaming up. Or, if one engineer is writing tests in sync with the developer writing the implementation of the interface. There is also the driver and passenger approach for more experienced engineers to teach a new skill to a colleague. Each of these scenarios offers increased performance, as well as an honest code review from a teammate close to the implementation. However, adoption varies from team to team. Depending on the dynamic, a team may be made of engineers who prefer to work alone.
+Pair programming is the first form of "Continuous Code Review." If the code review guidelines state that you must have another set of eyes look at your code, then it's most reasonable to assume that working in tandem should keep everyone honest in following the team's standards. Pairing is easier for some engineers than others. I enjoy spending some of my time in a pair working towards a common goal, while other times I prefer to work on my own. For instance, when working on a difficult problem that more than one person is aware of may be easier to maximize brainpower by teaming up. Or, if one engineer is writing tests in sync with the developer writing the implementation of the interface. There is also the driver and passenger approach for more experienced engineers to teach a new skill to a colleague. Each of these scenarios offers increased performance, as well as an honest code review from a teammate close to the implementation.
 
+The adoption of pairing varies from team to team. Depending on the dynamic, a team may be made of engineers who prefer to work alone. Working alone has its benefits as well. There is comfort in being free to make mistakes, experiment with methods that aren't pretty, or go on a major refactoring mission. Remote work can make being in a zoom or teams meeting while screen sharing exhausting. It's not uncommon for teams to prefer to mix up pairing and soloing. If code review is important to the team and pull requests are too much of a bottleneck, how can you enforce the standards? The answer is post-commit review.
 
+Post commit review allows teams to commit to the `trunk` and group together commits, either automatically or through manual selection, to produce a diff for teammates to review. There are two tools that I have firsthand experience with:
+* [JetBrains Upsource](https://www.jetbrains.com/upsource/)
+* [Atlassian Crucible](https://www.atlassian.com/software/crucible)
 
+Both Upsource and Crucible offer similar features, including reviews that can be initiated by the author or authors by selecting commits on the trunk and requesting a code review from their teammates. The experience is very similar to a pull request in Azure Devops, Github, and Bitbucket. Reviewers can leave comments, have discussions and approve or reject a review. In addition, they can track new commits being added to the trunk by a standard pattern, such as an issue tracking number. If comments have been added to an area that is updated, the comment will resolve itself and the reviewer is notified of the change. This functionality should sound familiar if you use pull requests for code review. The difference is these commits have been applied to the trunk, and the code can start generating feedback from either internal testers or real users, depending on the team's release cadence. This allows the team to get feedback on the code, and how it operates in a real environment simultaneously.
+
+This approach is uncommon, but it is an option. I will add the disclaimer, both Upsource and Crucible have a UI that leaves something to be desired. It doesn't match the user experience of reviewing a pull request in any platform. If I had to pick, and I did at one point, Upsource is the better platform. Another disclaimer, as an SRE, it is a serious resource hog. For teams who struggle to get pull requests reviewed promptly, uncoupling code review and shipping code can be a liberating change. Consider the first example, "Jack". Jack found a bottleneck with his team while trying to get feedback from the engineers, quality assurance, and design. Had he been able to deliver code to all parties at the same time, he could have gotten feedback while he was still in the development process.
+
+Trunk-based development is more of a mindset shift than anything. Adopting TBD requires engineers to rethink how they build. It requires them to start asking questions such as:
+* What is the first deliverable increment of this feature?
+* How can this be deployed to production without interrupting the existing functionality?
+* How do we measure the stability of this feature?
 ### Feature Flags and Branching by Abstraction
 
 - Maintaining releasability while simultaneously delivering large features
@@ -123,8 +135,6 @@ Pair programming is the first form of "Continuous Code Review." If the code revi
 
 
 ### Continuous Delivery
-
--
 
 ## References
 
