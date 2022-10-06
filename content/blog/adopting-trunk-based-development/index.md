@@ -96,11 +96,6 @@ In terms of Trunk Based Development, releasability is one of the golden rules. H
 
 ## Concerns with adoption
 
-- Change management boards, fear of change
-- Managing risk appropriately
-- Can't necessarily trust everyone
-- Agility building the right product, Devops building the product right
-
 Working on a team new to high-performance delivery can introduce a regression in mindset due to fear of making a change that inevitably causes an issue. My particular experience with this issue was an ambition to be working at a faster cadence than we were. We were continuously pushing to a staging environment, and we were simply tagging the commit we wanted to release to prod and moving on. When our first serious issue came up in production while we were halfway through a sprint, we weren't comfortable enough with the state of the application to release to prod. We broke the rule. We weren't releasable. We spent the next two days ensuring the system was up to our standards, or the stakeholder's standards, to fix the issue in production. Two days was not acceptable. We needed a better strategy, and we need to take the state of releasability more seriously.
 Our team was releasing to production about every two weeks after we demo the latest work at our sprint review meeting. In trunk-based development, this isn't fast enough to be released from the trunk. There is too much drift between the environments at that point. I spoke earlier about the branch-from-release technique. This was a hard lesson, but a good one. By creating a release branch, we were able to cherry-pick a fix to the production code and deploy it to staging for testing without introducing any risk from the latest development.
 
@@ -110,7 +105,7 @@ Pair programming is the first form of "Continuous Code Review." If the code revi
 
 The adoption of pairing varies from team to team. Depending on the dynamic, a team may be made of engineers who prefer to work alone. Working alone has its benefits as well. There is comfort in being free to make mistakes, experiment with methods that aren't pretty, or go on a major refactoring mission. Remote work can make being in a zoom or teams meeting while screen sharing exhausting. It's not uncommon for teams to prefer to mix up pairing and soloing. If code review is important to the team and pull requests are too much of a bottleneck, how can you enforce the standards? The answer is post-commit review.
 
-Post commit review allows teams to commit to the `trunk` and group together commits, either automatically or through manual selection, to produce a diff for teammates to review. There are two tools that I have firsthand experience with:
+Post-commit review allows teams to commit to the `trunk` and group together commits, either automatically or through manual selection, to produce a diff for teammates to review. There are two tools that I have firsthand experience with:
 * [JetBrains Upsource](https://www.jetbrains.com/upsource/)
 * [Atlassian Crucible](https://www.atlassian.com/software/crucible)
 
@@ -121,8 +116,46 @@ This approach is uncommon, but it is an option. I will add the disclaimer, both 
 Trunk-based development is more of a mindset shift than anything. Adopting TBD requires engineers to rethink how they build. It requires them to start asking questions such as:
 * What is the first deliverable increment of this feature?
 * How can this be deployed to production without interrupting the existing functionality?
-* How do we measure the stability of this feature?
+* What effect will this have on the application if it's deployed to production?
+
+The new mindset begins to separate the concepts of "deploy" and "release". Many people consider these to be synonymous. But when releases and deployments are separated, the step towards TBD and continuous delivery becomes an achievable reality.
 ### Feature Flags and Branching by Abstraction
+
+To calm the nerves out there, let's tackle the subject of stability. When introducing code to the `trunk` at a higher rate and being ready to release at any time, teams have to account for developing new features that are not ready for customer use. Alternatively, teams releasing at lower cadences still need to be able to test new features that will take multiple release cycles to complete before they are ready to be introduced to the customers. This may be a new set of endpoints to REST API, a call-to-action on the screen, or refactoring existing functionality. There has to be a simple mechanism to protect the users from potentially breaking changes to the application in production.
+
+Feature flags are a way to control the flow of code to gate off logic or components that aren't ready for production traffic. They're also commonly referred to as feature toggles. Feature flags come in many forms. They can be as simple as a build flag that is baked into the configuration of the application, to runtime switchable data that can run A/B tests and slowly introduce traffic to the new code. In any case, the flag is a simple mechanism that directs a request through one path or another.
+
+A word of caution: By implementing feature flags, there is inevitable bloat in the code. Without properly managing the life of the flags, the codebase can grow exponentially in complexity. It's important to handle flags like technical debt. Generally, as soon as a flag is enabled in production it can be planned for removal.
+
+![Uncle Ben](https://media.giphy.com/media/10KIsXhwdoerHW/giphy.gif)
+
+A simple example of using feature flags is to show or hide something new in the UI. We'll use javascript and an environment variable as the simplest example.
+
+We'll add a new environment variable for production. *Hint: This could be a commit to trunk.*
+```
+// .env
+FEATURE_USE_FANCY_FORM=false
+```
+Then we add our fancy form.
+
+```React
+const FormPage: React.FC = () => {
+    const useFancyForm = process.env.REACT_FEATURE_USE_FANCY_FORM;
+    return (
+
+    <main className={styles.main}>
+        <h1 className={styles.title}>Fill this out!</h1>
+        {useFancyForm ? (
+            <NewHotnessForm props={hotProps} />
+            ) : (
+            <OldAndBustedForm props={notHotProps} />
+        )}
+      </main>
+    )
+}
+```
+
+
 
 - Maintaining releasability while simultaneously delivering large features
 - What are feature flags, and how do they work?
