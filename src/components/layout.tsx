@@ -1,5 +1,8 @@
 import * as React from "react";
 import { Link, PageProps } from "gatsby";
+import { defineCustomElements as deckDeckGoHighlightElement } from "@deckdeckgo/highlight-code/dist/loader";
+
+deckDeckGoHighlightElement();
 
 // -----------------------------------------------------------------------------------------
 // #region Interfaces

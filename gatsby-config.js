@@ -37,20 +37,20 @@ module.exports = {
 			options: {
 				id: "G-DKW438KHZ4",
 				includeInDevelopment: false,
-				defaultDataLayer: { platform: "gatsby" }
+				defaultDataLayer: { platform: "gatsby" },
 			},
 		},
-    {
-      resolve: `gatsby-plugin-google-analytics`,
-      options: {
-        trackingId: "325161812",
-        head: false,
-        anonymize: true,
-        siteSpeedSampleRate: 10,
-        cookieDomain: "dylanjustice.com",
-        enableWebVitalsTracking: true,
-      },
-    },
+		{
+			resolve: `gatsby-plugin-google-analytics`,
+			options: {
+				trackingId: "325161812",
+				head: false,
+				anonymize: true,
+				siteSpeedSampleRate: 10,
+				cookieDomain: "dylanjustice.com",
+				enableWebVitalsTracking: true,
+			},
+		},
 		{
 			resolve: `gatsby-transformer-remark`,
 			options: {
@@ -65,6 +65,13 @@ module.exports = {
 						resolve: `gatsby-remark-responsive-iframe`,
 						options: {
 							wrapperStyle: `margin-bottom: 1.0725rem`,
+						},
+					},
+					{
+						resolve: `gatsby-remark-highlight-code`,
+						options: {
+							terminal: "carbon",
+							theme: "solarized-dark",
 						},
 					},
 					`gatsby-remark-prismjs`,
