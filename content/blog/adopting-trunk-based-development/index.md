@@ -134,40 +134,49 @@ A simple example of using feature flags is to show or hide something new in the 
 We'll add a new environment variable for production. *Hint: This could be a commit to trunk.*
 ```
 // .env
-FEATURE_USE_FANCY_FORM=false
+REACT_FEATURE_USE_FANCY_FORM=false
 ```
-Then we add our fancy form.
+Then, optionally show the fancy form. In a development environment, you could temporarily enable the form by running `REACT_FEATURE_USE_FANCY_FORM=true npm start`.
 
-```React
+```tsx
 const FormPage: React.FC = () => {
     const useFancyForm = process.env.REACT_FEATURE_USE_FANCY_FORM;
+    const formProps: FormProps = {
+        // omitted for brevity
+    }
     return (
 
     <main className={styles.main}>
         <h1 className={styles.title}>Fill this out!</h1>
         {useFancyForm ? (
-            <NewHotnessForm props={hotProps} />
+            <NewHotness props={formProps} />
             ) : (
-            <OldAndBustedForm props={notHotProps} />
+            <OldAndBusted props={formProps} />
         )}
       </main>
     )
 }
 ```
 
+Using an environment variable is just an example strategy. In controlled cases, a constant that can be changed by the developer working on the feature would suffice. However, using a framework for handling this logic would allow for dynamic flags and more complex evaluations. Depending on the application and technology stack, baking the feature flags into a static configuration would easily allow for different flags to be enabled in a developer's workstation versus the production or other live environment. Pete Hodgson wrote on Martin Fowler's blog, "feature flags have a tendency to multiply rapidly, particularly when first introduced." As I mentioned earlier, they can create tech debt if you don't manage them appropriately. Having a dynamic feature toggle service can help alleviate some of these pains by increasing the visibility of what feature flags have been created, their age, and their status. When you start paying for feature flags, you get slick libraries and tools that come with it. However, the most important aspect of feature flags is accountability. Our proprietary A/B testing software ABE is a great example of using toggles to safely test code in production to get quick feedback. Other products like LaunchDarkly and split.io offer premium features to give teams insights into how well a new feature is performing.
 
+The first example of feature flagging showed how a simple boolean environment variable can be used to safely develop new functionality. Consider a REST API that is undergoing a significant refactor to one of it's endpoints. A simple query string parameter enabling the new logic would allow developers to work with the production endpoint, and potentially allow consumers to test it with their client applications. If the tests succeed, and all traffic is to use the new logic, the query string and any bitwise operators can be removed. If the refactor is more complex and the control flow could be error prone or difficult to follow, consider a `v2` route parameter that could introduce potentially breaking changes to an existing endpoint, while safely maintaining the original endpoint. In this example a consumer could be made aware of the `v2` api and the functional changes it offers, while being allowed to safely fall back to the previous version.
 
-- Maintaining releasability while simultaneously delivering large features
-- What are feature flags, and how do they work?
-- Simple example
-- Popular frameworks and libraries
-- What is branching by abstraction?
-- Simple example
-- Dependency Injection
-
-
+There are plenty of ways to get creative with developing new features while protecting the build and releasability of software products. Feature flags, api versioning, dependency injection and branching by abstraction are just tools in the toolbox for a team determined to reduce their lead time. Before you decide you can't do trunk based development because you can't use feature flags, consider the problem from another angle.
 
 ### Continuous Delivery
+
+Before concluding, let's consider the practice of Continuous Delivery and how it ties into trunk based development. TBD and CD are not the same thing. As demonstrated in earlier examples, it's acceptable to have a separation between commits and releases while still maintaining a high cadence. From a fundamental level, continuous delivery is an automatic push to production that could potentially occur on every commit. The purpose of this practice is based on the LEAN movement encouraging teams to deliver smaller batches, build quality in and automate repetitive tasks. By doing this, teams avoid the "firehose" into production where a large batch of changes are introduced all at once.
+
+Continuous delivery's purpose at it's core is to decouple us from release planning and force us to think about how to deliver software safely, quickly and sustainably. This is where TBD and Continuous Delivery converge. It's more of a mindset change. If we remove the release windows, planned releases and change review committee, how can we have confidence in the software we're building? First, we need to ensure the software meets quality standards. From Accelerate, "we invest in building a culture supported by tools and people where we can detect any issues quickly, so that they can be fixed straight away when they are cheap to detect and resolve"*[7]*.
+By delivering smaller batches to production and running a suite of reliable automated tests on frequent releases, issues are more easily identified. In an extreme example, finding a bug in a batch of 100 commits is harder than finding a bug in one or two commits. If the issue is quickly identified, it can just as quickly be rolled back and confidently released to production.
+
+CD is another tool in the toolbox for software teams to elevate their performance. However, it's not a requirement or a barrier to TBD. They can be paired, adapted or be completely independent of each other.
+## Conclusion
+
+A former colleague first described trunk based development to me as "the next level of software engineering." I didn't require a whole lot of additional convincing, that sounded great to me! I wanted to get to that level. But he encouraged me to read *Accelerate*, which drives the point home. It helped me encourage a team with mixed opinions on the subject to experiment with the concepts that had the potential to improve our efficiency and our culture. We spent several sprints iterating on the experiment, investing in more quality automation to build our confidence. Finally, we reached a point where we renamed the `main` branch `trunk` and dedicated ourselves to the practice.
+
+As a large company with many products and services, we have many different strategies. Some teams have already started down the path of TBD, and some may just be learning about it. Continuous improvement is not about making large radical changes requiring immediate adoption. Small changes are easier to digest and allow you to find what works best for you and your teams now, while allowing for further improvement in the future.
 
 ## References
 
@@ -176,7 +185,9 @@ const FormPage: React.FC = () => {
 - [3][3]: "You're doing it wrong" https://trunkbaseddevelopment.com/youre-doing-it-wrong/#keeping-a-single-release-branch Accessed 09/13/2022
 - [4][4]: Hammant, Paul "Branch for release" https://trunkbaseddevelopment.com/branch-for-release/ Accessed 09/13/2022
 - 5 Forsgren, N., Humble, J., & Kim, G. (2018). Test Automation. In Accelerate: The science behind devops: Building and scaling high performing technology organizations (pp. 53-54). essay, IT Revolution.
-
+- [6][6] Hodgson, Pete. “Feature Toggles (Aka Feature Flags).” Martinfowler.com, https://martinfowler.com/articles/feature-toggles.html.
+- 7 Forsgren, N., Humble, J., & Kim, G. (2018). Trunk-Based Development. In Accelerate: The science behind devops: Building and scaling high performing technology organizations (pp. 42-43). essay, IT Revolution.
 [1]: https://trunkbaseddevelopment.com/#one-line-summary "One-line summary"
 [3]: https://trunkbaseddevelopment.com/youre-doing-it-wrong/#keeping-a-single-release-branch "Keeping a single release branch"
 [4]: https://trunkbaseddevelopment.com/branch-for-release/ "Branch for release"
+[6]: https://martinfowler.com/articles/feature-toggles.html "Feature Toggles"
