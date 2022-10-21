@@ -1,6 +1,6 @@
 ---
-title: "Adopting trunk-based Development"
-date: "2022-08-30"
+title: "Adopting Trunk-Based Development"
+date: "2022-10-21"
 description: "Accelerate your team's productivity with TBD"
 ---
 
