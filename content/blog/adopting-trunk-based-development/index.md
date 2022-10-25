@@ -129,7 +129,7 @@ REACT_FEATURE_USE_FANCY_FORM=false
 Then, optionally show the fancy form. In a development environment, you could temporarily enable the form by running `REACT_FEATURE_USE_FANCY_FORM=true npm run start`.
 
 ```tsx
-const FormPage: React.FC = () => {X
+const FormPage: React.FC = () => {
     const useFancyForm = process.env.REACT_FEATURE_USE_FANCY_FORM;
     const formProps: FormProps = {
         // omitted for brevity
