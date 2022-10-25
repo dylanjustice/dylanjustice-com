@@ -182,7 +182,7 @@ CD is another tool in the toolbox for software teams to elevate their performanc
 
 A former colleague first described trunk-based development to me as "the next level of software engineering." I didn't require a whole lot of additional convincing, that sounded great to me! I wanted to get to that level. But he encouraged me to read *Accelerate*, which drives the point home. It helped me encourage a team with mixed opinions on the subject to experiment with the concepts that had the potential to improve our efficiency and our culture. We spent several sprints iterating on the experiment, investing in more quality automation to build our confidence. Finally, we reached a point where we renamed the `main` branch `trunk` and dedicated ourselves to the practice.
 
-As a large company with many products and services, we have many different strategies. Some teams have already started down the path of TBD, and some may just be learning about it. Continuous improvement is not about making large radical changes requiring immediate adoption. Small changes are easier to digest and allow you to find what works best for you and your teams now while allowing for further improvement in the future.
+Some teams have already started down the path of TBD, and some may just be learning about it. Continuous improvement is not about making large radical changes requiring immediate adoption. Small changes are easier to digest and allow you to find what works best for you and your teams now while allowing for further improvement in the future.
 
 ## References
 
