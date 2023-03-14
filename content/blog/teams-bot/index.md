@@ -1,5 +1,5 @@
 ---
-title: "AAR: Creating an integrated MS Power Virtual Agent"
+title: "Creating an integrated MS Power Virtual Agent"
 date: "2022-08-22"
 description: "That time I built a bot, and then had to delete it."
 ---
