@@ -3,3 +3,4 @@ node_modules/
 public
 gatsby-types.d.ts
 graphql-types.ts
+.node-version
