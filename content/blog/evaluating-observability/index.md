@@ -41,3 +41,12 @@ date: 2024-02-26
     * If we can't send them to datadog, we should try to send them to splunk. Worst case we leave them in cloudwatch.
     * Make sure the logs are structured
     * Document them in a datadog dashboard or _SOMETHING_ so we can find them quickly
+
+## Solr Cluster
+* Datadog instrumentation for solr
+* Logs to datadog/splunk/cloudwatch
+    * document location
+* Monitor performance of solr queries
+* monitor ingestion?
+
+## 
