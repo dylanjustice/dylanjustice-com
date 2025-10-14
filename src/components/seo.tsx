@@ -6,7 +6,6 @@
  */
 
 import * as React from "react";
-import PropTypes from "prop-types";
 import { useStaticQuery, graphql } from "gatsby";
 
 // -----------------------------------------------------------------------------------------
@@ -23,7 +22,7 @@ const Seo: React.FC<SEOProps> = (props: SEOProps) => {
 	const { description, lang, title, children } = props;
 	const { site } = useStaticQuery(
 		graphql`
-			query {
+			query SeoQuery {
 				site {
 					siteMetadata {
 						title
@@ -58,10 +57,6 @@ const Seo: React.FC<SEOProps> = (props: SEOProps) => {
 			{children}
 		</React.Fragment>
 	);
-};
-
-Seo.defaultProps = {
-	description: ``,
 };
 
 export default Seo;
